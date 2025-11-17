@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Python 基本編"
-date: 2025-11-16
+date: 2025-11-17
 categories: [Python　基本編]  
 ---
 
