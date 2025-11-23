@@ -3,15 +3,16 @@ layout: post
 title: "DOMの基本操作～スタイル・属性・要素の追加/削除"
 date: 2025-11-24
 categories: [JavaScript / DOM]  
-permalink: /DOM-basics/  
+permalink: /DOM-basics/
 ---
 
 このページでは、取得した DOM 要素に対して
 「どんな操作ができるのか」をまとめています。
 
 CSS の変更、クラス付け、属性操作、要素の生成・削除など、  
-Web ページを動的に変化させる基本はここに集まっています。  
-
+Web ページを動的に変化させる基本はここに集まっています。 
+ 
+---
 【内容】 DOMに対する基本的な操作  
 - element.style
 - className / classList
