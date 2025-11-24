@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "DOMの基本操作～スタイル・属性・要素の追加/削除"
-date: 2025-11-24
+date: 2025-11-23
 categories: [JavaScript / DOM]  
 permalink: /DOM-basics/
 ---
