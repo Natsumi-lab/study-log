@@ -6,6 +6,8 @@ categories: [React]
 permalink: /react-start/
 ---
 
+# ここではReactに良く出るJavaScriptのおさらいをします  
+
 let  
 const  
 
@@ -61,3 +63,72 @@ const [name, type] = myFavoriteAnimal
 console.log(name) // 'ロッキー'
 console.log(type) // 'dog'
 ```
+
+## スプレッド構文   ...（ドッド3つ） をつなげて書く  
+スプレッド構文を使うことで、配列やオブジェクトの要素を一つずつ取り出して、1つ1つ別々のものとして扱うことができます  
+これは、配列やオブジェクトを簡単にコピーしたり、要素を追加したりする場合に非常に便利  
+```
+配列のコピーを作成
+const numbers = [10, 20]
+const copyNumbers = [...numbers]
+
+console.log(copyNumbers) // [10, 20]
+
+
+配列に要素を追加して新しい配列を作成
+const numbers = [10, 20]
+const updatedNumbers = [...numbers, 30, 40]
+
+console.log(updatedNumbers) // [10, 20, 30, 40]
+
+
+オブジェクトのコピーを作成
+const user = { id: 1, age: 20 }
+const copyUser = {...user}
+
+console.log(copyUser) // { id: 1, age: 20 }
+
+
+オブジェクトに要素を追加して新しいオブジェクトを作成
+const user = { id: 1, age: 20 }
+const updatedUser = {
+  ...user,
+  job: 'teacher'
+}
+
+console.log(updatedUser) // { id: 1, age: 20, job: 'teacher' }
+
+
+// 関数での使用例
+const array = [2, 5]
+const addFunction = (a, b) => {
+   return console.log(a + b)
+}
+
+addFunction(...array) // 出力結果が、7となる
+```
+
+## 配列操作/map  
+mapメソッドは、呼び出し元の配列の各要素に対して処理を行い、元の配列を変更せずに新しい配列を作ります 
+
+```
+let 新しい配列 = array.map((element, index, array) => {
+  // 処理
+  return element;
+});
+element: 現在処理中の要素
+index: 現在処理中の要素のインデックス（省略可能）
+array: 元の配列（省略可能）
+
+
+配列usersの各要素のnameプロパティの値の先頭にMr.を追記する
+const users = [
+  { name: 'Williams' },
+  { name: 'Brown' }
+];
+
+console.log(users.map((user) => 'Mr. ' 
+```
+
+## 配列操作/filter(プリミティブ)   
+ 
