@@ -104,8 +104,29 @@ const ComponentName = () => {
   );
 };
 ```
+## {} はJSX の中に JavaScript を書くための「カッコ」  
+HTML のように見える JSX の中には、本来 JavaScript はそのまま書けません。  
+そこで、**{} に入れた部分だけ JavaScript として扱える**というルールがあります。  
+<button onClick={props.onClick}>Click me</button>  
+「props.onClick という JavaScript の値（関数）を onClick に渡します」という意味。  
+
 ## React.Fragment  
+**<></> は <React.Fragment></React.Fragment> の短縮形**
+
+
 ```
+①　
+<Text>
+  ここに何か入れる
+</Text>
+
+②
+<Text />　
+半角スペースに/
+
+①と②は全く同じ意味。
+タグの中に何も入れるものがなければ<Test />と書くのが普通。
+--------------------------------
 余計な div を入れた場合
 jsx
 return (
@@ -131,9 +152,6 @@ return (
     <p>World</p>
   </React.Fragment>
 );
-
-
-<></> は <React.Fragment></React.Fragment> の短縮形
 ```
 
 ##  フック関数  
