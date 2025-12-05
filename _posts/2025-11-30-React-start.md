@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "React入門編"
+title: "ReactによくでるJS"
 date: 2025-11-30
 categories: [React]  
 permalink: /react-start/
