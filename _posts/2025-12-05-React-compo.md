@@ -2,7 +2,7 @@
 layout: post
 title: "React component"
 date: 2025-12-05
-categories: [JavaScript]  
+categories: [React]  
 permalink: /React-compo/
 ---
 
@@ -10,7 +10,39 @@ permalink: /React-compo/
 親コンポーネントから子コンポーネントに渡すデータ  
 子は props.名前 で受け取って使う 
 
+普通の props（数値・文字列）は 親 → 子の一方向のみ。
+しかし関数を渡すと子がその関数を呼ぶことで、親にイベントを伝えられる(子→親のやり取りができる唯一の方法)  
+```
+子から親へ関数を渡す例：
 
+③ 子コンポーネントは props として受け取る
+function MyComponent(props) {
+  return <button onClick={props.onClick}>Click me</button>;
+}
+
+① 親コンポーネントが関数を持っている
+function App() {
+  const handleClick = () => {
+    alert("Button was clicked!");
+  };
+
+② 親が子に“関数そのもの”を渡す
+  return <MyComponent onClick={handleClick} />;
+}
+
+つまり、-------  
+
+App（親）
+ │
+ │  onClick={handleClick}  ← 関数を渡す
+ ▼
+MyComponent（子）
+
+MyComponent がボタンをクリックしたら
+props.onClick() を実行
+
+→ 親の handleClick() が呼ばれる！
+```
 ## props の分割代入  
 props の中から必要なデータだけを取り出して、変数として扱いやすくする書き方  
 ```
@@ -48,9 +80,62 @@ const App = () => {
     </>
   )
 }
+-----------------------
+children という名前は props.children の略
+props の分割代入と、props.childrenを合わせた例：
+
+function ChildComponent({ children }) {
+  return <div>{children}</div>;
+}
 ```
 ## props.children  
+子コンポーネントを「枠（レイアウト）」として使える  
+再利用できる「枠」コンポーネントが作れる  
+```
+function ParentComponent() {
+  return (
+    <ChildComponent>
+      <p>この部分がprops.childrenとして渡されます。</p>
+    </ChildComponent>
+  );
+}
 
+function ChildComponent(props) {
+  return (
+    <>
+      {props.children}
+    </>
+  );
+}
+
+つまり、-------  
+
+ParentComponent
+ ↓ 中に書いた内容
+<ChildComponent>
+    ★ この部分が props.children ★
+</ChildComponent>
+
+ChildComponent（子）
+ ↓ props.children を使う
+{props.children} をここに表示
+----------------  
+
+例: デフォルトコンテンツの設定
+タイトルが無ければ「タイトルなし」
+function Title({ text }) {
+  return <h1>{text || "タイトルなし"}</h1>;
+}
+
+<Title text="こんにちは" />   // → こんにちは
+<Title />                   // → タイトルなし
+```
+## A || B   JavaScriptの推論  
+A が 空 / undefined / null / false → B を採用
+A に 値がある → A を採用
+つまり左がなかったら右を使う   
+
+------------------------------  
 
 ## 「親コンポーネント」「子コンポーネント」とは？  
 ✔ 親コンポーネント  

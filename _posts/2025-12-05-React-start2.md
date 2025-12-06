@@ -111,8 +111,10 @@ HTML のように見える JSX の中には、本来 JavaScript はそのまま�
 「props.onClick という JavaScript の値（関数）を onClick に渡します」という意味。  
 
 ## React.Fragment  
-**<></> は <React.Fragment></React.Fragment> の短縮形**
+**<></> は <React.Fragment></React.Fragment> の短縮形**  
 
+**<tag />　半角スペースに/**  
+中身がないとき <img /> など、自己閉じタグが一般的  
 
 ```
 ①　
@@ -159,7 +161,8 @@ return (
 例えば：　　
 カウンターの数字を覚えておく、入力フォームの文字を覚えておく、ボタンを押した回数を記録する  
 **その代表が useState**    
-フックはすべて use から始まる名前 をしています（例：useState, useEffect）  
+フックはすべて use から始まる名前 をしています（例：useState, useEffect） 
+コンポーネントのトップレベル（＝ return の前の、if やループの外）に書く  
 ```
 const [state, setState] = useState(initialState);
 
@@ -224,8 +227,67 @@ console に現在の状態が表示される。
     </>
   )
 }
+```
+## カスタムフック  
+- use○○ という名前で自分で作る関数のこと  例：useUser, useFetch, useToggle  
+- useState や useEffect などのフックを組み合わせる  
+- よく使う処理をまとめたい、複数のコンポーネントで同じロジックを使い回したいときに使う  
+- フックを通常の関数と同じ場所ではなくコンポーネントの外で呼び出す
+（React のルールで、フックはコンポーネント or カスタムフック内でしか使えません。）
+```
+function useCustomHook() {
+  const [state, setState] = useState(initialValue);
 
+  useEffect(() => {
+    // 何らかの副作用処理
+    return () => {
+      // クリーンアップ処理
+    };
+  }, [dependencies]);
 
+  return [state, setState];
+}
+-----------------------
+
+カスタムフックとして切り出す
+// useMousePosition.js
+import { useState, useEffect } from "react";
+
+export const useMousePosition = () => {
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const update = e => setPosition({ x: e.clientX, y: e.clientY })
+    window.addEventListener('mousemove', update)
+    return () => window.removeEventListener('mousemove', update)
+  }, [])
+
+  return position
+}
+---------------
+コンポーネント側はとてもスッキリ！
+ロジックが完全に分離され、読みやすくなりました。
+const App = () => {
+  const position = useMousePosition()
+
+  return (
+    <div>
+      マウス位置: {position.x}, {position.y}
+    </div>
+  )
+}
+```
+## 分割代入  
+カスタムフックでよく使われる書き方  
+```
+handleIncrement とは状態（count）を 1 増やすための関数
+
+const { count, handleIncrement } = useCounter()
+
+上記は次と同じ意味です：
+const result = useCounter()
+const count = result.count
+const handleIncrement = result.handleIncrement
 ```
 
 ## 条件付きレンダー/三項演算子  
@@ -421,6 +483,8 @@ function MyComponent() {
   return <div style={style}>Hello, world!</div>;
 }
 ```
+
+
 
 
 
