@@ -11,6 +11,11 @@ permalink: /TS-utility/
 ジェネリクスは、型をパラメータとして受け取り、その型を使用してコードを書くことができる  
 一般的にはtypeの頭文字である「T」を用いることが多い  
 
+## extends  
+型の制約（絞り込み）  
+<T extends X>  
+T は X の“条件を必ず含んでいる”必要がある  
+
 ## Partial`<T>`  
 オブジェクト型のすべてのプロパティを省略可能にすることができます  
 ```
@@ -176,4 +181,8 @@ const foo: Hoge = [20, 'taro']
 const bar: Hoge = ['taro', 20]
 ```
 
+## Record  
+Record<Keys, ValueType>  
+Keys に含まれるキーを全部持ち、値は ValueType の型になるオブジェクト型  
 
+キーが決まっていて、すべて同じ型を持たせたいときに便利    
