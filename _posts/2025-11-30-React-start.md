@@ -1,12 +1,108 @@
 ---
 layout: post
 title: "ReactによくでるJS"
-date: 2025-11-30
+date: 2025-12-12 (updated)
 categories: [React]  
 permalink: /react-start/
 ---
+## Reactとconst, function, let, =,  (),  []の組み合わせ  
+React でよく使うのは const と function の2つ（let はほぼ使わない）    
+| 作りたいもの         | 記号の組み合わせ                    | 例                                     |
+| -------------- | --------------------------- | ------------------------------------- |
+| 関数コンポーネント      | `function App() {}`         | function App() {}                     |
+| 関数コンポーネント（アロー） | `const App = () => {}`      | const App = () => {}                  |
+| 普通の変数          | `const name = '太郎'`         | const name = ""                       |
+| オブジェクト         | `const obj = {}`            | const user = {}                       |
+| 配列             | `const arr = []`            | const skills = []                     |
+| useState 受け取り  | `const [a, b] = useState()` | const [count, setCount] = useState(0) |
+| 関数（アロー）        | `const fn = () => {}`       | const handleClick = () => {}          |
+| オブジェクトの分割代入    | `const {a, b} = obj`        | const {name, age} = user              |
 
-# ここではReactに良く出るJavaScriptのおさらいをします  
+① 関数コンポーネントを作るとき  
+✔ function を使う書き方  
+```
+function App() {
+  return <h1>Hello</h1>
+}
+
+✔ const を使う書き方（アロー関数）
+const App = () => {
+  return <h1>Hello</h1>
+}
+```
+
+このときの形は const + = + () => {}  
+
+② 通常の変数（値）を作るとき  
+```
+const userName = '太郎'
+const number = 10
+const isLoggedIn = true
+```
+
+これは：  
+const + 変数名 + = + 値  
+
+③ オブジェクトを作るとき  
+```
+const user = {
+  name: '太郎',
+  age: 20
+}
+```
+
+形は：  
+const + 変数名 + = + {}  
+
+④ 配列を作るとき  
+```
+const skills = ['HTML', 'CSS', 'JavaScript']
+```
+
+形は：  
+const + 変数名 + = + []  
+
+⑤ useState の配列分割代入  
+React 特有の書き方：  
+```
+const [count, setCount] = useState(0)
+```
+
+これは：  
+const + [ ] + = + useState()  
+→ useState が「配列」を返すから [] で受け取る  
+
+⑥ 関数を変数として作る（アロー関数）  
+```
+const handleClick = () => {
+  console.log('クリックされました')
+}
+```
+
+形は：  
+const + 変数名 + = + () => {}  
+
+⑦ オブジェクトの分割代入  
+```
+const { name, age } = user
+```
+
+これは：  
+const + { } + = + オブジェクト  
+
+## React では let をほぼ使わない理由  
+React は 再レンダリングのたびに変数が書き換わることを嫌うので、基本は const を使います。  
+React で “変わる値” は useState を使うからです  
+```
+const [count, setCount] = useState(0)
+```
+
+つまり：  
+値が変わる → useState を使う  
+値が変わらない → const を使う  
+なので let を使う場面はほぼなし  
+
+# ここからReactに良く出るJavaScriptのおさらいをします  
 
 let  
 const  
