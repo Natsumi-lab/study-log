@@ -25,15 +25,18 @@ Header.jsx
 export default function Header() {
   return <header>ヘッダー</header>;
 }
-
-React でコンポーネントを別ファイルに分ける理由は：
-✔ 1つのファイルが長くならない
-✔ どこに何があるかわかりやすい（可読性アップ）
-✔ 部品として使い回せる（再利用しやすい）
-✔ メンテナンスしやすい
+```
+React でコンポーネントを別ファイルに分ける理由は：  
+✔ 1つのファイルが長くならない  
+✔ どこに何があるかわかりやすい（可読性アップ）  
+✔ 部品として使い回せる（再利用しやすい）  
+✔ メンテナンスしやすい  
 ---------------------------
+
 functionは関数を定義するためのキーワード
-ComponentNameはコンポーネントの名前です。関数コンポーネントの名前は大文字で始めるのが一般的。
+ComponentNameはコンポーネントの名前です。  
+関数コンポーネントの名前は大文字で始めるのが一般的。    
+```
 利用したい箇所で関数コンポーネント<ComponentName />と記述することで関数コンポーネントを利用することができます。
 
 function ComponentName() {
@@ -80,7 +83,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 ↓
 例:ウェブページの初期表示
-ウェブページを初めて表示するときに、どの部分に何を表示するかを決めるために使います。createRootで表示する場所を決め、root.renderでその場所に内容を表示します。
+ウェブページを初めて表示するときに、どの部分に何を表示するかを決めるために使います。
+createRootで表示する場所を決め、root.renderでその場所に内容を表示します。
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<h1>Hello, World!</h1>);
 
