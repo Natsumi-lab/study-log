@@ -181,3 +181,22 @@ function App() {
 }
 
 ```
+## 関数コンポーネントを利用するときはタグのように記述する  
+利用したい箇所で関数コンポーネント<ComponentName />と記述することで関数コンポーネントを利用することができます。  
+```
+function ComponentName() {
+  return (
+    <div>
+      <h1>Hello, World!</h1>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <ComponentName />
+    </div>
+  );
+}
+```
