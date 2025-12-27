@@ -3,6 +3,7 @@ layout: post
 title: "プログラミング言語の共通点"
 date: 2025-11-18
 categories: [Common]  
+permalink: /Common/  
 ---
 
 # プログラミング言語の共通点  
