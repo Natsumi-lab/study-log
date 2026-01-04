@@ -11,7 +11,7 @@ title: Home
     <ul>
       {% for category in site.categories %}
         <li>
-          <a href="{{ "/categories/#" | append: category[0] | slugify | relative_url }}">
+          <a href="{{ '/categories/' | relative_url }}#{{ category[0] | slugify }}">
             {{ category[0] }} ({{ category[1].size }})
           </a>
         </li>
