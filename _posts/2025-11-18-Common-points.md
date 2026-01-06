@@ -1,10 +1,13 @@
 ---
 layout: post
 title: "プログラミング言語の共通点"
-date: 2025-11-18
+date: 2025-12-31 (updated)
 categories: [Common]  
 permalink: /Common/  
 ---
+
+パッケージをインストールした後、  
+`code .`コマンドでそのプロジェクトフォルダに移動することができます。  
 
 # プログラミング言語の共通点  
 
