@@ -248,4 +248,37 @@ let message = age >= 18 ? '成人です' : '未成年です';
 
 console.log(message);
 // 未成年です
+
+例２：
+todos === null || todos === undefined
+  ? undefined
+  : todos.map(...)
 ```
+例２の意味：  
+「todos が 何も入っていなかったら、何もしない。  
+入っていたら、todos.map(...) を実行する」  
+
+=== は「完全に同じか」を調べる  
+todos === null  todos が null か？  
+todos === undefined   todos が undefined か？  
+
+||（または）  
+「todos が null か、または undefined なら true」  
+todos === null || todos === undefined  
+
+? :（三項演算子）  
+条件 ? A : B  
+条件が true なら A、false なら B  
+
+todos === null || todos === undefined  
+  ? undefined  
+  : todos.map(...)  
+
+  もし todos が null または undefined なら  
+👉 undefined を返す（＝何もしない）  
+そうでなければ  
+👉 todos.map(...) を実行する  
+
+条件   
+? A   
+ B    
