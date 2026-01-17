@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "モジュール"
+title: "github Actions"
 date: 2026-01-16
 categories: [Common]  
 permalink: /githubActions/  
