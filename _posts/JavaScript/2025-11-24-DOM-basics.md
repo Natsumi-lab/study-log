@@ -21,7 +21,7 @@ Web ページを動的に変化させる基本はここに集まっています�
 - createElement
 - appendChild
 - remove
-- removeChild
+- removeChild  
 ---
 
 ■ element.style （直接スタイルを変更する）
