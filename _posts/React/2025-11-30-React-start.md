@@ -5,280 +5,283 @@ date: 2025-12-12 (updated)
 categories: [React]  
 permalink: /react-start/
 ---
-## Reactとconst, function, let, =,  (),  []の組み合わせ  
-React でよく使うのは const と function の2つ（let はほぼ使わない）    
-| 作りたいもの         | 記号の組み合わせ                    | 例                                     |
-| -------------- | --------------------------- | ------------------------------------- |
-| 関数コンポーネント      | `function App() {}`         | function App() {}                     |
-| 関数コンポーネント（アロー） | `const App = () => {}`      | const App = () => {}                  |
-| 普通の変数          | `const name = '太郎'`         | const name = ""                       |
-| オブジェクト         | `const obj = {}`            | const user = {}                       |
-| 配列             | `const arr = []`            | const skills = []                     |
-| useState 受け取り  | `const [a, b] = useState()` | const [count, setCount] = useState(0) |
-| 関数（アロー）        | `const fn = () => {}`       | const handleClick = () => {}          |
-| オブジェクトの分割代入    | `const {a, b} = obj`        | const {name, age} = user              |
+# Reactでよく使う const / function / 配列 / オブジェクトの基本まとめ
 
-① 関数コンポーネントを作るとき  
-✔ function を使う書き方  
-```
-function App() {
-  return <h1>Hello</h1>
-}
+Reactでは主に **const** と **function** を使ってコードを書きます。  
+**let はほとんど使用しません。**
 
-✔ const を使う書き方（アロー関数）
-const App = () => {
-  return <h1>Hello</h1>
-}
-```
+---
 
-このときの形は const + = + () => {}  
+## よく使う記法一覧
 
-② 通常の変数（値）を作るとき  
-```
-const userName = '太郎'
-const number = 10
-const isLoggedIn = true
-```
+| 作りたいもの | 記号の組み合わせ | 例 |
+|--------------|------------------|----|
+| 関数コンポーネント | function App() {} | function App() {} |
+| 関数コンポーネント（アロー関数） | const App = () => {} | const App = () => {} |
+| 普通の変数 | const name = '太郎' | const name = "" |
+| オブジェクト | const obj = {} | const user = {} |
+| 配列 | const arr = [] | const skills = [] |
+| useStateの受け取り | const [a, b] = useState() | const [count, setCount] = useState(0) |
+| 関数（アロー関数） | const fn = () => {} | const handleClick = () => {} |
+| オブジェクト分割代入 | const {a, b} = obj | const {name, age} = user |
 
-これは：  
-const + 変数名 + = + 値  
+---
 
-③ オブジェクトを作るとき  
-```
-const user = {
-  name: '太郎',
-  age: 20
-}
-```
+## 関数コンポーネントの作り方
 
-形は：  
-const + 変数名 + = + {}  
+### function を使う方法
 
-④ 配列を作るとき  
-```
-const skills = ['HTML', 'CSS', 'JavaScript']
-```
+    function App() {
+      return <h1>Hello</h1>
+    }
 
-形は：  
-const + 変数名 + = + []  
+### const を使う方法（アロー関数）
 
-⑤ useState の配列分割代入  
-React 特有の書き方：  
-```
-const [count, setCount] = useState(0)
-```
+    const App = () => {
+      return <h1>Hello</h1>
+    }
 
-これは：  
-const + [ ] + = + useState()  
-→ useState が「配列」を返すから [] で受け取る  
+形：
 
-⑥ 関数を変数として作る（アロー関数）  
-```
-const handleClick = () => {
-  console.log('クリックされました')
-}
-```
+const + = + () => {}
 
-形は：  
-const + 変数名 + = + () => {}  
+---
 
-⑦ オブジェクトの分割代入  
-```
-const { name, age } = user
-```
+## 変数の作り方
 
-これは：  
-const + { } + = + オブジェクト  
+    const userName = '太郎'
+    const number = 10
+    const isLoggedIn = true
 
-## React では let をほぼ使わない理由  
-React は 再レンダリングのたびに変数が書き換わることを嫌うので、基本は const を使います。  
-React で “変わる値” は useState を使うからです  
-```
-const [count, setCount] = useState(0)
-```
+形：
 
-つまり：  
-値が変わる → useState を使う  
-値が変わらない → const を使う  
-なので let を使う場面はほぼなし  
+const + 変数名 + = + 値
 
-# ここからReactに良く出るJavaScriptのおさらいをします  
+---
 
-let  
-const  
+## オブジェクトの作り方
 
-```
-// オブジェクトのプロパティ値を変更・追加する
-// オブジェクトの定義
-const fruit = {
-  name: 'レモン',
-  stock: 20
-}
-console.log(fruit) // {name:'レモン', stock:20}
+    const user = {
+      name: '太郎',
+      age: 20
+    }
 
-// プロパティ値を変更
-fruit.name = 'グレープフルーツ'
-console.log(fruit) // {name:'グレープフルーツ', stock:20}
+形：
 
-// プロパティを新たに追加
-fruit.color = 'pink'
-console.log(fruit) // {name:'グレープフルーツ', stock:20, color:'pink'}
+const + 変数名 + = + {}
 
-// 配列の定義
-const basket = ['いちご', 'さくらんぼ']
-console.log(basket) // ['いちご', 'さくらんぼ']
+---
 
-// 1つ目の値を変更
-basket[0] = 'マンゴー'
-console.log(basket) // ['マンゴー', 'さくらんぼ']
+## 配列の作り方
 
-// 配列に値を追加する
-basket.push('ライチ')
-console.log(basket) // ['マンゴー', 'さくらんぼ', 'ライチ'];
-```
+    const skills = ['HTML', 'CSS', 'JavaScript']
 
-関数とは、いくつかの処理をまとめたものです。  
-関数宣言の特徴は、コード順番に関係なく実行されます。  
-function 関数名 (仮引数1, 仮引数2) {実行処理}  
+形：
 
-引数が1つの場合()を省略できる  
-constdouble = count => {  return count * 2 };  
+const + 変数名 + = + []
 
-処理が1文の場合、returnも省略できる（書かない）  
-const double = count => count * 2;  
+---
 
-```
-「分割代入」とは、オブジェクトや配列から値を取り出して別個の変数に代入するための方法です。  
-// 配列の定義
-const myFavoriteAnimal = ['ロッキー', 'dog']
+## useState の分割代入
 
-// 配列の分割代入
-const [name, type] = myFavoriteAnimal
+    const [count, setCount] = useState(0)
 
-// 分割代入を使用した結果
-console.log(name) // 'ロッキー'
-console.log(type) // 'dog'
-```
+useState は配列を返すため [] で受け取ります。
 
-## スプレッド構文   ...（ドッド3つ） をつなげて書く  
-スプレッド構文を使うことで、配列やオブジェクトの要素を一つずつ取り出して、1つ1つ別々のものとして扱うことができます  
-これは、配列やオブジェクトを簡単にコピーしたり、要素を追加したりする場合に非常に便利  
-```
-配列のコピーを作成
-const numbers = [10, 20]
-const copyNumbers = [...numbers]
+形：
 
-console.log(copyNumbers) // [10, 20]
+const + [] + = + useState()
 
+---
 
-配列に要素を追加して新しい配列を作成
-const numbers = [10, 20]
-const updatedNumbers = [...numbers, 30, 40]
+## アロー関数の定義
 
-console.log(updatedNumbers) // [10, 20, 30, 40]
+    const handleClick = () => {
+      console.log('クリックされました')
+    }
 
+形：
 
-オブジェクトのコピーを作成
-const user = { id: 1, age: 20 }
-const copyUser = {...user}
+const + 変数名 + = + () => {}
 
-console.log(copyUser) // { id: 1, age: 20 }
+---
 
+## オブジェクトの分割代入
 
-オブジェクトに要素を追加して新しいオブジェクトを作成
-const user = { id: 1, age: 20 }
-const updatedUser = {
-  ...user,
-  job: 'teacher'
-}
+    const { name, age } = user
 
-console.log(updatedUser) // { id: 1, age: 20, job: 'teacher' }
+形：
 
+const + {} + = + オブジェクト
 
-// 関数での使用例
-const array = [2, 5]
-const addFunction = (a, b) => {
-   return console.log(a + b)
-}
+---
 
-addFunction(...array) // 出力結果が、7となる
-```
+# Reactで let をほぼ使わない理由
 
-## 配列操作/map  
-mapメソッドは、呼び出し元の配列の各要素に対して処理を行い、元の配列を変更せずに新しい配列を作ります 
+Reactでは再レンダリング時の状態管理に **useState** を使います。
 
-```
-let 新しい配列 = array.map((element, index, array) => {
-  // 処理
-  return element;
-});
-element: 現在処理中の要素
-index: 現在処理中の要素のインデックス（省略可能）
-array: 元の配列（省略可能）
+    const [count, setCount] = useState(0)
 
+整理：
 
-配列usersの各要素のnameプロパティの値の先頭にMr.を追記する
-const users = [
-  { name: 'Williams' },
-  { name: 'Brown' }
-];
+- 値が変わる → useState
+- 値が変わらない → const
 
-console.log(users.map((user) => 'Mr. ' 
-```
+そのため let はほぼ使用しません。
 
-## 配列操作/filter(プリミティブ)   
-配列の各要素をチェックして条件に合うものだけを新しい配列として返すことができます。  
-**配列.filter(条件の判定を返す関数)**  
-```
-配列[1, 2, 3, 4, 5, '1']に対して、文字列の'1'を除いた配列を取り出します
+---
 
-console.log([1, 2, 3, 4, 5, '1'].filter((number) => number !== '1'));
+# オブジェクトと配列の値変更
 
-// [1, 2, 3, 4, 5]
-```
+const で宣言しても **中身は変更可能** です。
 
-## 三項演算子  
-条件に当てはまるかどうかを判定して、条件式が真（true）の時はコロンの前の値 、偽（false）の時はコロンの後の値を返します。  
-条件 ? 真の場合の値 : 偽の場合の値  
-```
-例: 成人かどうか判定する
-let age = 10;
+例：
 
-let message = age >= 18 ? '成人です' : '未成年です';
+オブジェクトの値変更
 
-console.log(message);
-// 未成年です
+    const fruit = {
+      name: 'レモン',
+      stock: 20
+    }
 
-例２：
-todos === null || todos === undefined
-  ? undefined
-  : todos.map(...)
-```
-例２の意味：  
-「todos が 何も入っていなかったら、何もしない。  
-入っていたら、todos.map(...) を実行する」  
+    fruit.name = 'グレープフルーツ'
+    fruit.color = 'pink'
 
-=== は「完全に同じか」を調べる  
-todos === null  todos が null か？  
-todos === undefined   todos が undefined か？  
+---
 
-||（または）  
-「todos が null か、または undefined なら true」  
-todos === null || todos === undefined  
+配列の値変更
 
-? :（三項演算子）  
-条件 ? A : B  
-条件が true なら A、false なら B  
+    const basket = ['いちご', 'さくらんぼ']
 
-todos === null || todos === undefined  
-  ? undefined  
-  : todos.map(...)  
+    basket[0] = 'マンゴー'
+    basket.push('ライチ')
 
-  もし todos が null または undefined なら  
-👉 undefined を返す（＝何もしない）  
-そうでなければ  
-👉 todos.map(...) を実行する  
+---
 
-条件   
-? A   
- B    
+# 関数とは
+
+関数は複数の処理をまとめたものです。
+
+書き方：
+
+function 関数名 (引数) { 処理 }
+
+例：
+
+    const double = count => count * 2
+
+特徴：
+
+- 引数が1つなら () を省略可能
+- 処理が1行なら return を省略可能
+
+---
+
+# 分割代入
+
+配列やオブジェクトから値を取り出す方法です。
+
+例：
+
+    const myFavoriteAnimal = ['ロッキー', 'dog']
+
+    const [name, type] = myFavoriteAnimal
+
+---
+
+# スプレッド構文
+
+記法：
+
+...
+
+配列やオブジェクトをコピー・追加できます。
+
+配列コピー
+
+    const numbers = [10, 20]
+    const copyNumbers = [...numbers]
+
+配列追加
+
+    const updatedNumbers = [...numbers, 30, 40]
+
+オブジェクトコピー
+
+    const user = { id: 1, age: 20 }
+    const copyUser = { ...user }
+
+オブジェクト追加
+
+    const updatedUser = {
+      ...user,
+      job: 'teacher'
+    }
+
+関数引数展開
+
+    const array = [2, 5]
+
+    const addFunction = (a, b) => {
+      return console.log(a + b)
+    }
+
+    addFunction(...array)
+
+---
+
+# map（配列操作）
+
+map は配列を加工して新しい配列を作ります。
+
+例：
+
+    const users = [
+      { name: 'Williams' },
+      { name: 'Brown' }
+    ]
+
+    users.map(user => 'Mr. ' + user.name)
+
+---
+
+# filter（配列操作）
+
+条件に一致する要素だけ取り出します。
+
+例：
+
+    [1, 2, 3, 4, 5, '1'].filter(number => number !== '1')
+
+結果：
+
+    [1, 2, 3, 4, 5]
+
+---
+
+# 三項演算子
+
+書き方：
+
+条件 ? 真の場合 : 偽の場合
+
+例：
+
+    let age = 10
+
+    let message = age >= 18
+      ? '成人です'
+      : '未成年です'
+
+---
+
+## null / undefined チェック例
+
+    todos === null || todos === undefined
+      ? undefined
+      : todos.map(...)
+
+意味：
+
+todos が null または undefined の場合は処理しない  
+それ以外なら map を実行する
