@@ -5,111 +5,234 @@ date: 2025-12-06
 categories: [TypeScript]  
 permalink: /TS-practice/
 ---
-## TypeScriptのコードを書いていて疑問に思ったところの解説  
+# TypeScript のコードで疑問に思いやすいポイントまとめ
 
-TypeScript で「既存の型に足す」方法  
-&（交差型 / intersection type）  
-User & { posts: Post[] }  
+ここでは TypeScript を書いていて混乱しやすい型操作について整理します。
 
-「何も含まない」というのは 省略可能（optional） という意味  
-dueDate?: string  
+---
 
-----------------------------------------------------
-### readonly isDone: boolean  
-### isDone: Readonly<boolean>  
-### は、全く別物  
+## 既存の型に型を追加する方法（交差型）
 
-readonly isDone: boolean
-「オブジェクトのプロパティ isDone を再代入不可（読み取り専用）にする」 という意味  
+記法：
 
-isDone: Readonly<boolean>  
-何の意味もありません  
-Readonly<boolean> は boolean 型に対して「プロパティを readonly にする」という処理をしようとするが  
-boolean は プリミティブ型でプロパティを持たない  
-よって Readonly<boolean> = boolean のまま  
+User & { posts: Post[] }
 
-| 書き方                         | 意味                       | 効果                  |
-| --------------------------- | ------------------------ | ------------------- |
-| `readonly isDone: boolean`  | プロパティ isDone を読み取り専用にする  | ✔ 書き換え不可になる         |
-| `isDone: Readonly<boolean>` | boolean に Readonly を適用する | ❌ 何も変わらず単なる boolean |
--------------------------------------------------------
-```
-const user = { id: 3, name: "bob"}
-type UserKey = keyof typeof user
-// "id" | "name"
+意味：
 
+既存の User 型に posts プロパティを追加した新しい型を作る
 
-型レベルで扱うには「値」ではなく「型」に変換する必要があり、typeof userを使う。  
+これは **intersection type（交差型）** と呼ばれます。
+
+---
+
+## optional（省略可能プロパティ）
+
+記法：
+
+dueDate?: string
+
+意味：
+
+「プロパティが存在しなくてもよい」
+
+例：
+
+- dueDate がある場合 → string
+- dueDate がない場合 → OK
+
+---
+
+# readonly の違い
+
+次の2つは見た目が似ていますが意味が違います。
+
+---
+
+## readonly isDone: boolean
+
+意味：
+
+オブジェクトのプロパティ isDone を再代入不可にする
+
+例：
+
+    type Todo = {
+      readonly isDone: boolean
+    }
+
+これは書き換え不可になります。
+
+---
+
+## isDone: Readonly<boolean>
+
+意味：
+
+実質的に意味がありません
+
+理由：
+
+Readonly はオブジェクト型に対して使うユーティリティ型ですが  
+boolean はプリミティブ型なので変化しません
+
+結果：
+
+boolean のまま
+
+---
+
+## 比較まとめ
+
+| 書き方 | 意味 | 効果 |
+|--------|------|------|
+| readonly isDone: boolean | プロパティを読み取り専用にする | 書き換え不可 |
+| isDone: Readonly<boolean> | boolean に Readonly を適用 | 変化なし |
+
+---
+
+# keyof と typeof の組み合わせ
+
+例：
+
+    const user = { id: 3, name: "bob" }
+
+    type UserKey = keyof typeof user
+
+結果：
+
+"id" | "name"
+
+---
+
+## 仕組み
+
 typeof user
-// => { id: number; name: string }
 
-keyof は オブジェクトのキー名を union 型として取り出す演算子
-keyof { id: number; name: string }
-// => "id" | "name"
-```
--------------------------------------------------------
-```
-const user = { id: 3, name: "bob"} as const
-type UserKey = keyof typeof user
-type UserValue = typeof user[UserKey]
+意味：
 
-↓　２・３行目の短縮形（意味は全く同じ）
+値を型として取得
 
-const user = { id: 3, name: "bob"} as const
-type UserValue = typeof user[keyof typeof user];
-```
--------------------------------------------------------
-```
-const fruits = ["apple","orange", "lemon" ]
-type FruitsType = _________
-// FruitsType = "apple" | "orange" | "lemon" となるように変換してください
+結果：
 
-type FruitsType = typeof fruits[number];
-// "apple" | "orange" | "lemon"
-```
-```
-解説：[]箱として見る
-fruits[0] → "apple"
-fruits[1] → "orange"
+{ id: number; name: string }
+
+---
+
+keyof
+
+意味：
+
+オブジェクトのキー名を union 型として取得
+
+結果：
+
+"id" | "name"
+
+---
+
+# オブジェクトの value を union 型にする
+
+例：
+
+    const user = { id: 3, name: "bob" } as const
+
+    type UserValue = typeof user[keyof typeof user]
+
+結果：
+
+3 | "bob"
+
+---
+
+# 配列の要素を union 型にする方法
+
+例：
+
+    const fruits = ["apple", "orange", "lemon"]
+
+    type FruitsType = typeof fruits[number]
+
+結果：
+
+"apple" | "orange" | "lemon"
+
+---
+
+## 考え方
+
+配列は箱として考えます
+
+例：
+
+fruits[0] → "apple"  
+fruits[1] → "orange"  
 fruits[2] → "lemon"
 
-つまり
-type FruitsTuple = ["apple", "orange", "lemon"];
-と同じ意味
+つまり：
 
-fruits[数字]だから
 fruits[number]
-```
 
-```
-配列の要素を Union 型にしたいとき
+は
+
+配列のどれかの値
+
+という意味になります。
+
+---
+
+## まとめ（配列 → union 型）
+
+記法：
+
 typeof 配列[number]
-この配列に入っているどれかの値という意味
-```
------------------------------------------
 
-## 網羅性チェック  
-「union 型のすべての種類を処理できているかをコンパイル時に確認すること  
+意味：
 
-union の要素を追加したとき  
-switch が書き漏れたとき  
-TypeScript が コンパイルエラー を出すのでエラーに気づくことができます。  
-```
-定番の書き方
-const assertNever = (x: never): never => {
-  throw new Error("Unexpected value " + x);
-};
+配列に含まれる値のどれか
 
-switch (value) {
-  case "A":
-  case "B":
-    break;
-  default:
-    return assertNever(value);
-}
-```
-## noUnusedLocals（ノー・アンユーズド・ローカルズ）  
-TypeScript の設定項目  
+---
 
-noUnusedLocals: true
-定義しただけで使われていないローカル変数があるとエラーにする
+# 網羅性チェック（exhaustiveness check）
+
+union 型のすべてのケースを処理できているかを  
+コンパイル時にチェックする方法です。
+
+新しい union を追加したとき
+
+switch 文に書き漏れがあると  
+TypeScript がエラーを出します。
+
+---
+
+## 定番の書き方
+
+    const assertNever = (x: never): never => {
+      throw new Error("Unexpected value " + x)
+    }
+
+    switch (value) {
+      case "A":
+      case "B":
+        break
+      default:
+        return assertNever(value)
+    }
+
+---
+
+# noUnusedLocals
+
+TypeScript の設定項目です
+
+設定：
+
+    noUnusedLocals: true
+
+意味：
+
+宣言しただけで使われていないローカル変数がある場合  
+コンパイルエラーになります
+
+目的：
+
+不要な変数を検出してコード品質を高める
