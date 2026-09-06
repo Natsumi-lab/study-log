@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ""
+title: "情報セキュリティ管理基準の構造"
 date: 2026-09-06
 categories: [Security]  
 permalink: /AuditStandards/
